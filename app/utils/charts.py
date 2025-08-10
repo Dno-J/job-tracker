@@ -9,10 +9,19 @@ from app.models.job import Job
 from app.utils.filesystem import ensure_folder
 
 # -----------------------------
-# 📁 Ensure charts output folder exists
+# 📁 Chart output path resolver
 # -----------------------------
-CHARTS_DIR = "app/static/charts"
-ensure_folder(CHARTS_DIR)
+def get_chart_path(filename: str) -> tuple[str, str]:
+    """
+    Returns (absolute_path, public_url) based on environment.
+    In production, saves to /tmp; locally, saves to static folder.
+    """
+    if os.getenv("ENV") == "production":
+        return f"/tmp/{filename}", f"/tmp/{filename}"
+    else:
+        charts_dir = "app/static/charts"
+        ensure_folder(charts_dir)
+        return os.path.join(charts_dir, filename), f"/static/charts/{filename}"
 
 # -----------------------------
 # 📊 Generate bar chart of job statuses
@@ -31,12 +40,11 @@ def generate_status_chart(jobs: list[Job]) -> str | None:
     plt.ylabel("Number of Applications")
     plt.tight_layout()
 
-    path = os.path.join(CHARTS_DIR, "job_status_chart.png")
-    ensure_folder(os.path.dirname(path))
+    path, url = get_chart_path("job_status_chart.png")
     plt.savefig(path)
     plt.close()
 
-    return "/static/charts/job_status_chart.png"
+    return url
 
 # -----------------------------
 # 📈 Generate line chart of applications over time
@@ -58,9 +66,8 @@ def generate_time_chart(jobs: list[Job]) -> str | None:
     plt.xticks(rotation=45)
     plt.tight_layout()
 
-    path = os.path.join(CHARTS_DIR, "job_applications_over_time.png")
-    ensure_folder(os.path.dirname(path))
+    path, url = get_chart_path("job_applications_over_time.png")
     plt.savefig(path)
     plt.close()
 
-    return "/static/charts/job_applications_over_time.png"
+    return url
