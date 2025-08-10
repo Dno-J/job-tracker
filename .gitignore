@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# IDE settings
+.idea/
+.vscode/
+
+# Environment variables
+.env
+.env.*
+
+# SQLite and test databases
+*.db
+
+# pytest cache
+.pytest_cache/
+.cache/
+
+# Exported files
+app/static/exports/
+app/static/charts/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Render build artifacts (if any)
+render-build/

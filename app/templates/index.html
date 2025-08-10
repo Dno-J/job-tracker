@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Tracker · Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 70px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1030;
+      height: 70px;
+    }
+
+    .navbar-brand-centered {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .hero {
+      flex: 1;
+      padding: 80px 0 40px;
+      text-align: center;
+    }
+
+    .features {
+      padding: 40px 0;
+      background-color: #fff;
+    }
+
+    .features .feature-icon {
+      font-size: 2rem;
+    }
+
+    .about-me {
+      background-color: #e9ecef;
+      padding: 60px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container position-relative">
+      <a class="navbar-brand navbar-brand-centered" href="/">Job Tracker</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="display-4">Welcome to Job Tracker</h1>
+      <p class="lead mt-3">
+        A simple web app to manage your job and internship applications.
+      </p>
+      <a href="/login" class="btn btn-primary mt-4">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container text-center">
+      <h2 class="mb-5">🚀 Feature Highlights</h2>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="feature-icon mb-2">✅</div>
+          <h5>Add & manage job applications</h5>
+        </div>
+        <div class="col-md-3">
+          <div class="feature-icon mb-2">📊</div>
+          <h5>View stats & progress</h5>
+        </div>
+        <div class="col-md-3">
+          <div class="feature-icon mb-2">📁</div>
+          <h5>Export your data to CSV/PDF</h5>
+        </div>
+        <div class="col-md-3">
+          <div class="feature-icon mb-2">🔐</div>
+          <h5>Secure account with JWT Auth</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section class="about-me">
+    <div class="container text-center">
+      <h2 class="mb-4">👋 About Me</h2>
+      <p class="lead">
+        Hey, I'm Dino. I'm learning to become a better web developer by building projects that actually solve problems I'm facing.
+      </p>
+      <p class="mb-3">
+        This job/internship tracker started as a small idea to help me stay organized during my own job search. I didn’t want to rely on messy spreadsheets anymore, so I decided to build something of my own. Along the way, I picked up FastAPI, Tailwind, JWT auth, and worked on things like export features and charts just trying to build the full thing end to end.
+      </p>
+      <p class="mb-3">
+        I’m still figuring things out, but I’ve realized I learn best by doing not just watching tutorials. Each project teaches me something new, whether it’s backend logic, cleaner UI, or writing better code. Right now, I’m focused on growing as a developer, building more useful tools, and eventually contributing to real-world software teams.
+      </p>
+      <p class="mb-0">
+        If you're reading this and have feedback or want to connect, feel free to reach out!
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-auto bg-white border-top py-4">
+    <div class="container text-center text-muted text-sm">
+      <p>© 2025 <strong>Dino Jackson</strong></p>
+      <p class="mb-0">
+        <a href="mailto:jacksondino00@gmail.com" class="text-decoration-none text-primary">jacksondino00@gmail.com</a> ·
+        <a href="https://www.linkedin.com/in/dino-jackson-486840368/" target="_blank" class="text-decoration-none text-primary">LinkedIn</a> ·
+        <a href="https://github.com/Dno-J" target="_blank" class="text-decoration-none text-primary">GitHub</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
