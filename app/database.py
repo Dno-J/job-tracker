@@ -14,13 +14,12 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL not set in .env file")
 
-# ⚙️ Create SQLModel engine with echo enabled for SQL logging
+# ⚙️ Create SQLModel engine
 engine = create_engine(DATABASE_URL, echo=True)
 
 # ---------------------------------------
 # 🔁 FastAPI dependency for DB sessions
 # ---------------------------------------
-# Used in route functions via Depends(get_session)
 def get_session() -> Generator[Session, None, None]:
     session = Session(engine)
     try:
@@ -31,7 +30,6 @@ def get_session() -> Generator[Session, None, None]:
 # ---------------------------------------
 # 📦 Context manager for scripts or utilities
 # ---------------------------------------
-# Allows usage like: with get_session_context() as session:
 @contextmanager
 def get_session_context():
     session = Session(engine)
@@ -43,7 +41,6 @@ def get_session_context():
 # ---------------------------------------
 # 🏗️ Create all tables on app startup
 # ---------------------------------------
-# Imports models to register them with SQLModel metadata
 def create_db_and_tables():
     from app.models import user, job  # Ensure models are loaded
     SQLModel.metadata.create_all(engine)
