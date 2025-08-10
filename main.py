@@ -11,6 +11,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from app.database import create_db_and_tables
 from app.routers import auth, job, dashboard, job_api
 from app.middleware.auth_middleware import AuthMiddleware
+from app.utils.charts import CHART_TMP_DIR
 
 # -------------------------------
 # 📋 Logging Setup
@@ -57,14 +58,16 @@ app.add_middleware(AuthMiddleware)     # Handles JWT-based auth
 static_path = os.path.join(os.path.dirname(__file__), "app", "static")
 templates_path = os.path.join(os.path.dirname(__file__), "app", "templates")
 
+# Mount chart temp folder for dynamic chart serving (must be above /static)
+app.mount("/static/tmp", StaticFiles(directory=CHART_TMP_DIR), name="tmp")
+logger.info(f"✅ Chart temp mounted: {CHART_TMP_DIR}")
+
 # Mount static files at /static (e.g. CSS, JS, images)
 app.mount("/static", StaticFiles(directory=static_path), name="static")
+logger.info(f"✅ Static mounted: {static_path}")
 
 # Load Jinja2 templates for HTML rendering
 templates = Jinja2Templates(directory=templates_path)
-
-# Log successful mounting
-logger.info(f"✅ Static mounted: {static_path}")
 logger.info(f"✅ Templates mounted: {templates_path}")
 
 # -------------------------------

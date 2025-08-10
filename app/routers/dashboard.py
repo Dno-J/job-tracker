@@ -8,7 +8,7 @@ from app.auth.jwt import get_current_user
 from app.models.user import User
 from app.models.job import Job
 from app.utils.templates import templates
-from app.utils.charts import generate_status_chart, generate_time_chart
+from app.utils.charts import generate_status_chart, generate_time_chart, cleanup_tmp_folder
 
 router = APIRouter()
 
@@ -42,7 +42,10 @@ def dashboard(
     for s in statuses:
         summary[s] = counter.get(s, 0)
 
-    # Generate charts (saved as PNGs in static folder)
+    # 🧹 Clean up old charts from /tmp
+    cleanup_tmp_folder()
+
+    # 📊 Generate charts (saved to /tmp and served via /static/tmp)
     status_chart = generate_status_chart(all_jobs)
     time_chart = generate_time_chart(all_jobs)
 

@@ -1,24 +1,37 @@
 import os
+import uuid
+import time
+import tempfile
 from collections import Counter
 from datetime import datetime, date
 import matplotlib
-matplotlib.use('Agg')  # ✅ Non-interactive backend for server environments
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from app.models.job import Job
-from app.utils.filesystem import ensure_folder
+
+# -----------------------------
+# 📁 Safe temp folder for charts
+# -----------------------------
+# Uses system temp directory and isolates chart files
+CHART_TMP_DIR = os.path.join(tempfile.gettempdir(), "job_tracker_charts")
+os.makedirs(CHART_TMP_DIR, exist_ok=True)
+
+# -----------------------------
+# 🧹 Cleanup old charts in temp folder
+# -----------------------------
+def cleanup_tmp_folder(max_age_seconds=3600):
+    now = time.time()
+    for fname in os.listdir(CHART_TMP_DIR):
+        path = os.path.join(CHART_TMP_DIR, fname)
+        if os.path.isfile(path) and now - os.path.getmtime(path) > max_age_seconds:
+            os.remove(path)
 
 # -----------------------------
 # 📁 Chart output path resolver
 # -----------------------------
 def get_chart_path(filename: str) -> tuple[str, str]:
-    """
-    Always saves charts to app/static/charts for fast static serving.
-    Returns (absolute_path, public_url).
-    """
-    charts_dir = "app/static/charts"
-    ensure_folder(charts_dir)
-    return os.path.join(charts_dir, filename), f"/static/charts/{filename}"
+    return os.path.join(CHART_TMP_DIR, filename), f"/static/tmp/{filename}"
 
 # -----------------------------
 # 📊 Generate bar chart of job statuses
@@ -37,7 +50,8 @@ def generate_status_chart(jobs: list[Job]) -> str | None:
     plt.ylabel("Number of Applications")
     plt.tight_layout()
 
-    path, url = get_chart_path("job_status_chart.png")
+    filename = f"job_status_chart_{uuid.uuid4().hex}.png"
+    path, url = get_chart_path(filename)
     plt.savefig(path)
     plt.close()
 
@@ -63,7 +77,8 @@ def generate_time_chart(jobs: list[Job]) -> str | None:
     plt.xticks(rotation=45)
     plt.tight_layout()
 
-    path, url = get_chart_path("job_applications_over_time.png")
+    filename = f"job_applications_over_time_{uuid.uuid4().hex}.png"
+    path, url = get_chart_path(filename)
     plt.savefig(path)
     plt.close()
 
