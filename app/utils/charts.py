@@ -6,21 +6,18 @@ matplotlib.use('Agg')  # ✅ Non-interactive backend for server environments
 import matplotlib.pyplot as plt
 
 from app.models.job import Job
+from app.utils.filesystem import ensure_folder
 
 # -----------------------------
 # 📁 Ensure charts output folder exists
 # -----------------------------
 CHARTS_DIR = "app/static/charts"
-os.makedirs(CHARTS_DIR, exist_ok=True)
+ensure_folder(CHARTS_DIR)
 
 # -----------------------------
 # 📊 Generate bar chart of job statuses
 # -----------------------------
 def generate_status_chart(jobs: list[Job]) -> str | None:
-    """
-    Creates a bar chart showing the count of each job status.
-    Returns the static file path or None if no data.
-    """
     counts = Counter(job.status for job in jobs if job.status)
     if not counts:
         return None
@@ -35,6 +32,7 @@ def generate_status_chart(jobs: list[Job]) -> str | None:
     plt.tight_layout()
 
     path = os.path.join(CHARTS_DIR, "job_status_chart.png")
+    ensure_folder(os.path.dirname(path))
     plt.savefig(path)
     plt.close()
 
@@ -44,10 +42,6 @@ def generate_status_chart(jobs: list[Job]) -> str | None:
 # 📈 Generate line chart of applications over time
 # -----------------------------
 def generate_time_chart(jobs: list[Job]) -> str | None:
-    """
-    Creates a line chart showing number of applications over time.
-    Returns the static file path or None if no valid dates.
-    """
     valid_dates = [job.applied_date for job in jobs if isinstance(job.applied_date, (date, datetime))]
     if not valid_dates:
         return None
@@ -65,6 +59,7 @@ def generate_time_chart(jobs: list[Job]) -> str | None:
     plt.tight_layout()
 
     path = os.path.join(CHARTS_DIR, "job_applications_over_time.png")
+    ensure_folder(os.path.dirname(path))
     plt.savefig(path)
     plt.close()
 

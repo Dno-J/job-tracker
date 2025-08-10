@@ -17,8 +17,9 @@ router = APIRouter()
 # 🔐 JWT Config (temporary)
 # -------------------------------
 # ⛔ Hardcoded secret — replace with config import in production
-SECRET_KEY = "your-secret-key"
-ALGORITHM = "HS256"
+from config import settings
+SECRET_KEY = settings.JWT_SECRET_KEY
+ALGORITHM = settings.JWT_ALGORITHM
 
 # -------------------------------
 # 🔍 Dependency to get current user from JWT cookie

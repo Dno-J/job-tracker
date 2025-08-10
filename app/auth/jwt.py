@@ -13,7 +13,7 @@ from config import settings
 # -----------------------------
 # 🔐 Create a JWT access token
 # -----------------------------
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """
     Encodes a JWT token with expiration.
     `data` should include a 'sub' field (e.g., username).
@@ -23,7 +23,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
         expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+    return jwt.encode(
+        to_encode,
+        settings.JWT_SECRET_KEY,
+        algorithm=settings.JWT_ALGORITHM
+    )
 
 # -----------------------------
 # ✅ Verify a JWT token
@@ -34,8 +38,11 @@ def verify_access_token(token: str) -> Optional[dict]:
     Returns payload if valid, None if invalid.
     """
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        return payload
+        return jwt.decode(
+            token,
+            settings.JWT_SECRET_KEY,
+            algorithms=[settings.JWT_ALGORITHM]
+        )
     except JWTError:
         return None
 
@@ -45,25 +52,30 @@ def verify_access_token(token: str) -> Optional[dict]:
 async def get_current_user(
     request: Request,
     session: Session = Depends(get_session)
-):
+) -> User:
     """
     Extracts JWT from cookie, verifies it, and returns the user.
     Raises 401 if token is missing, invalid, or user not found.
     """
     token = request.cookies.get("access_token")
     if not token:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+        raise HTTPException(
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Not authenticated"
+        )
 
     payload = verify_access_token(token)
-    if not payload:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED, detail="Invalid token")
+    if not payload or not payload.get("sub"):
+        raise HTTPException(
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="Invalid token"
+        )
 
-    username: str = payload.get("sub")
-    if not username:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED, detail="Invalid token payload")
-
-    user = session.exec(select(User).where(User.username == username)).first()
+    user = session.exec(select(User).where(User.username == payload["sub"])).first()
     if not user:
-        raise HTTPException(status_code=HTTP_401_UNAUTHORIZED, detail="User not found")
+        raise HTTPException(
+            status_code=HTTP_401_UNAUTHORIZED,
+            detail="User not found"
+        )
 
     return user

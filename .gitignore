@@ -26,8 +26,12 @@ venv/
 .cache/
 
 # Exported files
-app/static/exports/
-app/static/charts/
+app/static/exports/*
+!app/static/exports/.keep
+
+# Chart images
+app/static/charts/*
+!app/static/charts/.keep
 
 # OS-specific
 .DS_Store

@@ -1,4 +1,5 @@
 import io
+import os
 from typing import List
 from reportlab.lib.pagesizes import A4
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
@@ -7,15 +8,15 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 
 from app.models.job import Job
+from app.utils.filesystem import ensure_folder
+
+EXPORTS_DIR = "app/static/exports"
 
 # -----------------------------
 # 📄 Generate a well-formatted PDF report of jobs
 # -----------------------------
-def generate_pdf(jobs: List[Job]) -> bytes:
-    """
-    Creates a styled PDF report of job applications.
-    Returns PDF as bytes for download or response.
-    """
+def generate_pdf(jobs: List[Job], filename: str = "job_applications.pdf") -> bytes:
+    ensure_folder(EXPORTS_DIR)
     buffer = io.BytesIO()
 
     doc = SimpleDocTemplate(
@@ -28,11 +29,9 @@ def generate_pdf(jobs: List[Job]) -> bytes:
     body_style = ParagraphStyle(name='Body', fontSize=8, leading=10)
     elements = []
 
-    # Title
     elements.append(Paragraph("Job Applications Report", styles['Title']))
     elements.append(Spacer(1, 12))
 
-    # Table headers
     data = [[
         Paragraph("Title", body_style),
         Paragraph("Company", body_style),
@@ -43,7 +42,6 @@ def generate_pdf(jobs: List[Job]) -> bytes:
         Paragraph("Notes", body_style)
     ]]
 
-    # Table rows
     for job in jobs:
         data.append([
             Paragraph(job.title or "-", body_style),
@@ -74,4 +72,9 @@ def generate_pdf(jobs: List[Job]) -> bytes:
 
     pdf = buffer.getvalue()
     buffer.close()
+
+    # Optional: save to disk if needed
+    # with open(os.path.join(EXPORTS_DIR, filename), "wb") as f:
+    #     f.write(pdf)
+
     return pdf
