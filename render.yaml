@@ -3,12 +3,20 @@ services:
     name: job-tracker-backend
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 8000
     envVars:
       - key: DATABASE_URL
-        value: postgres://your_neon_user:your_neon_password@your_neon_host/dbname
-      - key: SECRET_KEY
-        value: your-secret-key
+        value: postgresql+asyncpg://neondb_owner:npg_UamVvw5G9Mht@ep-misty-violet-a15hdp6m-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+      - key: JWT_SECRET_KEY
+        value: 5Te8uFH9D7Kq1wr9OxADd3vl3S9zEu9pDwCN0MiW5x0
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "30"
+      - key: ALLOWED_ORIGINS
+        value: http://localhost,http://localhost:3000
+      - key: PORT
+        value: "8000"
       - key: ENV
         value: production
     autoDeploy: true
