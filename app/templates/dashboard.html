@@ -85,7 +85,7 @@
       <section class="bg-white p-4 rounded shadow" aria-label="Status Overview Chart">
         <h3 class="text-lg font-bold mb-2">Status Overview</h3>
         {% if status_chart %}
-          <img src="{{ status_chart }}" alt="Pie chart showing job statuses" class="w-full h-auto rounded" />
+          <img src="{{ status_chart }}" alt="Status Overview" class="w-full h-auto rounded" />
         {% else %}
           <p class="text-gray-500 italic">No status data available.</p>
         {% endif %}
@@ -95,7 +95,7 @@
       <section class="bg-white p-4 rounded shadow" aria-label="Applications Over Time Chart">
         <h3 class="text-lg font-bold mb-2">Applications Over Time</h3>
         {% if time_chart %}
-          <img src="{{ time_chart }}" alt="Line chart of job applications over time" class="w-full h-auto rounded" />
+          <img src="{{ time_chart }}" alt="Applications Over Time" class="w-full h-auto rounded" />
         {% else %}
           <p class="text-gray-500 italic">No timeline data available.</p>
         {% endif %}

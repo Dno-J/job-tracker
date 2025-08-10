@@ -13,15 +13,12 @@ from app.utils.filesystem import ensure_folder
 # -----------------------------
 def get_chart_path(filename: str) -> tuple[str, str]:
     """
-    Returns (absolute_path, public_url) based on environment.
-    In production, saves to /tmp; locally, saves to static folder.
+    Always saves charts to app/static/charts for fast static serving.
+    Returns (absolute_path, public_url).
     """
-    if os.getenv("ENV") == "production":
-        return f"/tmp/{filename}", f"/tmp/{filename}"
-    else:
-        charts_dir = "app/static/charts"
-        ensure_folder(charts_dir)
-        return os.path.join(charts_dir, filename), f"/static/charts/{filename}"
+    charts_dir = "app/static/charts"
+    ensure_folder(charts_dir)
+    return os.path.join(charts_dir, filename), f"/static/charts/{filename}"
 
 # -----------------------------
 # 📊 Generate bar chart of job statuses
