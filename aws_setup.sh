@@ -15,8 +15,8 @@ echo "👤 Adding user to Docker group..."
 sudo usermod -aG docker $USER
 
 echo "📁 Cloning your Job Tracker repo..."
-git clone https://github.com/Dno-J/job-tracker.git
-cd job-tracker
+#git clone https://github.com/Dno-J/job-tracker.git
+#cd job-tracker
 
 echo "🔐 Loading environment variables..."
 cp .env.ec2 .env
