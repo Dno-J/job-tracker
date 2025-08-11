@@ -1,35 +1,182 @@
 # 💼 Job Tracker — FastAPI App for Managing Job Applications
 
-Track, filter, and export your job hunt with a secure FastAPI backend. Includes JWT auth, PDF/CSV export, charts, and full test coverage.
+A FastAPI-powered job tracking platform with JWT authentication, CSV/PDF exports, analytics dashboard, and full Docker support deployable on Render and AWS EC2.
 
-[![Live App](https://img.shields.io/badge/-Job%20Tracker-00C7B7?logo=render&logoColor=white&style=flat-square)](https://job-tracker-59j1.onrender.com)
-[![LinkedIn](https://img.shields.io/badge/-Dino%20Jackson-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/dino-jackson-486840368)
-[![GitHub](https://img.shields.io/badge/-Dno--J-gray?logo=github&style=flat-square)](https://github.com/Dno-J)
+<!-- 🌐 Live Apps -->
+[![Live App — Render](https://img.shields.io/badge/Live%20App-00C7B7?logo=render&logoColor=white&style=flat-square)](https://job-tracker-59j1.onrender.com)
+[![Live App — AWS EC2](https://img.shields.io/badge/Live%20App%20EC2-FF9900?logo=amazonaws&logoColor=white&style=flat-square)](http://16.171.148.202:8000)
 
+<!-- 🛠️ Tech Badges -->
+[![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=flat-square)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white&style=flat-square)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white&style=flat-square)](https://www.docker.com/)
+[![Postgres](https://img.shields.io/badge/Postgres-4169E1?logo=postgresql&logoColor=white&style=flat-square)](https://www.postgresql.org/)
+[![SQLModel](https://img.shields.io/badge/SQLModel-0F9D58?logo=python&logoColor=white&style=flat-square)](https://sqlmodel.tiangolo.com/)
+[![Pytest](https://img.shields.io/badge/Pytest-0A9EDC?logo=pytest&logoColor=white&style=flat-square)](https://docs.pytest.org/)
+
+<!-- 📜 Meta Badges -->
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/Dno-J/job-tracker?style=flat-square)](https://github.com/Dno-J/job-tracker/commits/main)
 
 ---
+
 
 ## 🚀 Features
 
-- 🔐 JWT-based authentication with hashed passwords
-- 📊 Dashboard view with filters and charts
-- ➕ CRUD on job applications (add, edit, delete)
-- 🔎 Filter/search by status, company, location, and date
-- 📁 Export applications to PDF and CSV
-- 🛡️ Middleware-enforced protected routes
-- 🧪 Full test suite for auth, CRUD, security, and exports
+- 📂 **Job Application Management** — Add, edit, delete, and filter applications with status tracking.  
+- 🔐 **Secure Authentication** — JWT (HTTP-only cookies), password hashing, and middleware guards.  
+- 📊 **Interactive Dashboard** — Charts, quick stats, and trends for fast insights.  
+- 📤 **Data Export** — Export applications to CSV or printable PDF (with charts).  
+- 🐳 **Dockerized** — Consistent local and cloud environments via Docker.  
+- ☁️ **Multi-cloud Deployment** — Deploy on **Render** and **AWS EC2**.  
+- 🛡️ **Environment Management** — Safe `.env` templates for local and cloud setups.  
+- 🧪 **Testing** — Comprehensive Pytest suite covering CRUD, authentication/security, and export validation. 
 
 ---
 
-## 🌐 Live demo
+## 📦 Local Setup
 
-[Open the deployed app on Render](https://job-tracker-59j1.onrender.com)
+```bash
+# Clone the repository
+git clone https://github.com/Dno-J/job-tracker.git
+cd job-tracker
+
+# Create and populate env file
+cp .env.example .env
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run locally
+uvicorn main:app --reload
+````
+
+---
+
+
+## ☁️ Deployment
+
+This app is **fully Dockerized** and runs identically on **Render** and **AWS EC2** for maximum flexibility.  
+Containerization ensures smooth, repeatable deployments on any host.
+
+---
+
+### 📦 Quick Deployment Flow
+
+```mermaid
+flowchart LR
+    A[Code Push to GitHub] --> B[Docker Build]
+    B --> C[Deploy to Render]
+    B --> D[Deploy to AWS EC2]
+    C --> E[Live App (Render)]
+    D --> F[Live App (EC2)]
+````
+
+---
+
+### 🔷 Render
+
+* Deployment configured with `render.yaml` file
+* Environment variables managed via Render dashboard or in `render.yaml`
+* Database: **Neon Postgres** (or SQLite for local development)
+* Automatic builds & deploys triggered on every push to `main` branch
+
+**Live App:** [job-tracker-59j1.onrender.com](https://job-tracker-59j1.onrender.com)
+
+**Setup Commands:**
+
+```bash
+# 1. Push your latest code to GitHub
+git add .
+git commit -m "Deploy to Render"
+git push origin main
+
+# 2. Log in to https://render.com and connect your GitHub repo
+
+# 3. Create a new Web Service on Render:
+#    - Select your repo and 'main' branch
+#    - Use 'Docker' or 'Python' environment (your render.yaml uses python env)
+#    - Set environment variables in Render dashboard OR rely on those in render.yaml
+#    - Render will auto-build and deploy your app on push
+
+# 4. Monitor build and deployment logs in Render dashboard
+
+# 5. Access your live app via the provided Render URL
+```
+
+---
+
+### 🟠 AWS EC2
+
+* Manual Dockerized deployment on your own **AWS EC2** instance
+* Environment variables configured via `.env.ec2.template`
+
+**Setup Commands:**
+
+```bash
+# SSH into your EC2 instance
+ssh ubuntu@<your-ec2-ip>
+
+# Clone your repo
+git clone https://github.com/Dno-J/job-tracker.git
+cd job-tracker
+
+# Copy and edit env file for production settings
+cp .env.ec2.template .env
+
+# Build the Docker image
+docker build -t job-tracker-app .
+
+# Run the container, forwarding port 8000 and passing env vars
+docker run -d -p 8000:8000 --env-file .env job-tracker-app
+```
+
+**Live App:** [http://16.171.148.202:8000](http://16.171.148.202:8000)
+
+---
+
+
+## 🧪 Running Tests
+
+To run the automated test suite, make sure you have all dependencies installed, then execute:
+
+```bash
+pytest
+````
+
+The Pytest suite covers:
+
+* CRUD operations (create, read, update, delete)
+* Security checks (authentication, authorization)
+* Data export verification (CSV, PDF generation)
+
+Tests run against an isolated SQLite database for consistency and speed.
+
+---
+
+## 🛠️ Tech Stack
+
+| Category         | Tools & Frameworks                                       | Purpose                                                |
+|------------------|---------------------------------------------------------|--------------------------------------------------------|
+| **Backend**      | FastAPI, SQLModel, Pydantic                              | API endpoints, ORM for DB models, request/response validation |
+| **Auth/Security**| JWT (HTTP-only cookies), Password hashing, Middleware guards | Secure login, session handling, route protection         |
+| **Testing**      | Pytest, Fixtures, Isolated SQLite DB                     | Automated CRUD, security, and export tests with reproducible results |
+| **Deployment**   | Docker, Render, AWS EC2, Neon Postgres                   | Cloud hosting, database hosting, containerized builds    |
+| **Utilities**    | Jinja2, Matplotlib, WeasyPrint, CSV/PDF export scripts   | Server-side rendering, data visualization, export generation |
+
+---
+
+
+## 🏗️ Project Structure
+
+For the complete folder and file layout, including descriptions of each component, see [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
 
 ---
 
 ## 🖼️ App preview (screenshots)
 
-All images live in app/static/assets/screenshots/.
+Below are some key screens of the Job Tracker app in action.  
+All images live in `app/static/assets/screenshots/`
 
 ### 📋 Dashboard
 ![Dashboard](app/static/assets/screenshots/dashboard.png)
@@ -53,158 +200,13 @@ All images live in app/static/assets/screenshots/.
 
 ---
 
-## 🔐 Authentication flow
+## 📬 Contact 
 
-### 🧑‍💻 Signup
-![Signup Form](app/static/assets/screenshots/signup_page.png)
-- Create an account; passwords are hashed and validated.
+If you’d like to discuss the project or potential opportunities, you can reach me here:
 
-### 🔑 Login
-![Login Form](app/static/assets/screenshots/login_page.png)
-- Authenticate via JWT stored in HTTP-only cookies for security.
-
-### 🚫 Invalid credentials
-![Auth Error](app/static/assets/screenshots/auth_error_state.png)
-- Clear error messaging and safe failure states prevent information leaks.
-
----
-
-## 📦 Export functionality
-
-- PDF export: clean, printable summaries of your current/filtered applications.
-- CSV export: easy import to spreadsheets or external tools.
-- CSV header format:
-  ```
-  Title,Company,Location,Link,Status,Applied Date,Notes
-  ```
-
----
-
-## 🏗️ Project structure
-
-```plaintext
-job-tracker/
-├── app/
-│   ├── auth/                 # JWT logic, password hashing, auth dependencies
-│   ├── middleware/           # FastAPI middleware for route protection
-│   ├── models/               # SQLModel ORM models (Job, User)
-│   ├── routers/              # FastAPI route handlers (auth, jobs, dashboard, API)
-│   ├── schemas/              # Pydantic schemas for request/response
-│   ├── static/               # Charts, exports, screenshots
-│   │   ├── charts/           # Rendered chart images
-│   │   └── exports/          # Generated PDFs (git-kept via .keep)
-│   ├── templates/            # Jinja2 HTML templates (dashboard, auth, jobs)
-│   ├── tests/                # Pytest suite (CRUD, security, exports)
-│   ├── utils/                # CSV/PDF generation, charts, template helpers
-│   ├── database.py           # DB engine + session config
-│   └── __init__.py
-├── .env                      # Local env variables (not committed)
-├── .env.example              # Safe template for shared usage
-├── config.py                 # Environment and config handling
-├── Dockerfile                # Production Docker image config
-├── jobtracker.db             # Dev SQLite database
-├── main.py                   # FastAPI entrypoint
-├── pytest.ini                # Pytest config (e.g., warning filters)
-├── render.yaml               # Deployment settings for Render
-├── requirements.txt          # Python dependencies
-└── test.db                   # Isolated test SQLite database
-```
-
----
-
-## 🧰 Tech stack
-
-| Backend  | Auth/Security        | Testing        | Deployment        |
-|----------|-----------------------|----------------|-------------------|
-| FastAPI  | JWT (HTTP-only cookie)| Pytest         | Docker + Render   |
-| SQLModel | Password hashing      | Isolated DB    | Neon Postgres     |
-| Pydantic | Middleware guards     | Fixtures       | Env templates     |
-
----
-
-## 📦 Local setup
-
-```bash
-# Clone repository
-git clone https://github.com/Dno-J/job-tracker.git
-cd job-tracker
-
-# Create & activate virtual environment
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS/Linux
-# source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure env (edit values as needed)
-copy .env.example .env   # Windows
-# cp .env.example .env   # macOS/Linux
-
-# Run the application (choose one)
-python main.py
-# or (if you prefer uvicorn)
-# uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
----
-
-## 🧪 Testing
-
-```bash
-pytest -v --disable-warnings
-```
-
-- Uses an isolated test database (`test.db`)
-- Covers signup/login, export routes, CRUD operations, and security middleware
-
----
-
-## 🐳 Docker (Optional)
-
-Build and run the app using Docker:
-
-```bash
-# Build the Docker image
-docker build -t job-tracker .
-
-# Run the container with port mapping and environment variables
-docker run --env-file .env -p 8000:8000 job-tracker
-```
-
----
-
-## 🌐 Deployment
-
-- Hosted on Render using render.yaml
-- Environment variables configured on the Render dashboard
-- Database: Neon Postgres (or SQLite for local dev)
-- Containerized build for reproducibility
-
-[![Live App](https://img.shields.io/badge/-Job%20Tracker-00C7B7?logo=render&logoColor=white&style=flat-square)](https://job-tracker-59j1.onrender.com)
-
----
-
-## 🧭 Roadmap
-
-- [x] CRUD job tracking
-- [x] JWT authentication with cookie storage
-- [x] PDF/CSV export
-- [x] Dashboard + filters
-- [ ] Pagination for job listings
-- [ ] Import from CSV
-- [ ] Optional OAuth login
-
----
-
-## 👨‍💻 Developer
-
-Built with ❤️ by **Dino Jackson**
-
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?logo=linkedin&style=flat-square)](https://www.linkedin.com/in/dino-jackson-486840368)
-[![GitHub](https://img.shields.io/badge/-GitHub-gray?logo=github&style=flat-square)](https://github.com/Dno-J)
+[![LinkedIn](https://img.shields.io/badge/Dino%20Jackson-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dino-jackson-486840368)
+[![GitHub](https://img.shields.io/badge/Dno--J-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/Dno-J)
+[![Email](https://img.shields.io/badge/jacksodino00%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:jacksodino00@gmail.com)
 
 ---
 
@@ -212,7 +214,7 @@ Built with ❤️ by **Dino Jackson**
 
 This project is licensed under the MIT License.
 
-```text
+```
 MIT License
 
 Copyright (c) 2025 Dino Jackson
@@ -230,3 +232,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY.
 ```
+<p align="center">
+  Built with ❤️ by <strong>Dino Jackson</strong>
+</p>
+
