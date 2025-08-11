@@ -70,7 +70,7 @@ flowchart LR
     B --> D[Deploy to AWS EC2]
     C --> E[Live App (Render)]
     D --> F[Live App (EC2)]
-````
+```
 
 ---
 
