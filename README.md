@@ -49,7 +49,7 @@ pip install -r requirements.txt
 
 # Run locally
 uvicorn main:app --reload
-````
+```
 
 ---
 
@@ -142,7 +142,7 @@ To run the automated test suite, make sure you have all dependencies installed, 
 
 ```bash
 pytest
-````
+```
 
 The Pytest suite covers:
 
