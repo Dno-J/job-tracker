@@ -20,7 +20,18 @@ A FastAPI-powered job tracking platform with JWT authentication, CSV/PDF exports
 
 ---
 
+## 📚 Table of Contents
+- [Features](#features)
+- [Local Setup](#local-setup)
+- [Deployment](#deployment)
+- [Running Tests](#running-tests)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [App Preview](#app-preview-screenshots)
+- [Contact](#contact)
+- [License](#license)
 
+---
 ## 🚀 Features
 
 - 📂 **Job Application Management** — Add, edit, delete, and filter applications with status tracking.  
@@ -59,21 +70,6 @@ uvicorn main:app --reload
 This app is **fully Dockerized** and runs identically on **Render** and **AWS EC2** for maximum flexibility.  
 Containerization ensures smooth, repeatable deployments on any host.
 
----
-
-### 📦 Quick Deployment Flow
-
-```mermaid
-flowchart LR
-    A[Code Push to GitHub] --> B[Docker Build]
-    B --> C[Deploy to Render]
-    B --> D[Deploy to AWS EC2]
-    C --> E[Live App (Render)]
-    D --> F[Live App (EC2)]
-```
-
----
-
 ### 🔷 Render
 
 * Deployment configured with `render.yaml` file
@@ -104,7 +100,8 @@ git push origin main
 # 5. Access your live app via the provided Render URL
 ```
 
----
+**Live App:** [http://16.171.148.202:8000](http://16.171.148.202:8000)
+
 
 ### 🟠 AWS EC2
 
@@ -114,21 +111,18 @@ git push origin main
 **Setup Commands:**
 
 ```bash
-# SSH into your EC2 instance
-ssh ubuntu@<your-ec2-ip>
+# 1. SSH into your EC2 instance
+ssh -i ~/.ssh/ec2-key.pem ubuntu@your-ec2-ip
 
-# Clone your repo
-git clone https://github.com/Dno-J/job-tracker.git
+# 2. Navigate to your cloned repo
 cd job-tracker
 
-# Copy and edit env file for production settings
-cp .env.ec2.template .env
+# 3. Build and run container
+docker build -t jobtracker-ec2 .
+docker run -d --name jobtracker -p 80:80 --env-file .env.ec2 jobtracker-ec2
 
-# Build the Docker image
-docker build -t job-tracker-app .
-
-# Run the container, forwarding port 8000 and passing env vars
-docker run -d -p 8000:8000 --env-file .env job-tracker-app
+# 4. Test app availability
+curl http://localhost   # or visit your EC2 public URL
 ```
 
 **Live App:** [http://16.171.148.202:8000](http://16.171.148.202:8000)
@@ -235,4 +229,3 @@ LIABILITY.
 <p align="center">
   Built with ❤️ by <strong>Dino Jackson</strong>
 </p>
-
