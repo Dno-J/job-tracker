@@ -17,6 +17,7 @@ venv/
 # Environment variables
 .env
 .env.*
+!.env.ec2.template
 
 # SQLite and test databases
 *.db
