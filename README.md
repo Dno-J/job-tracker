@@ -20,19 +20,19 @@ A FastAPI-powered job tracking platform with JWT authentication, CSV/PDF exports
 
 ---
 
-## 📚 Table of Contents
+## Table of Contents
 - [Features](#features)
 - [Local Setup](#local-setup)
 - [Deployment](#deployment)
 - [Running Tests](#running-tests)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
-- [App Preview](#app-preview-screenshots)
+- [App preview screenshots](#app-preview-screenshots)
 - [Contact](#contact)
 - [License](#license)
 
 ---
-## 🚀 Features
+## Features
 
 - 📂 **Job Application Management** — Add, edit, delete, and filter applications with status tracking.  
 - 🔐 **Secure Authentication** — JWT (HTTP-only cookies), password hashing, and middleware guards.  
@@ -45,7 +45,7 @@ A FastAPI-powered job tracking platform with JWT authentication, CSV/PDF exports
 
 ---
 
-## 📦 Local Setup
+## Local Setup
 
 ```bash
 # Clone the repository
@@ -65,7 +65,7 @@ uvicorn main:app --reload
 ---
 
 
-## ☁️ Deployment
+## Deployment
 
 This app is **fully Dockerized** and runs identically on **Render** and **AWS EC2** for maximum flexibility.  
 Containerization ensures smooth, repeatable deployments on any host.
@@ -130,7 +130,7 @@ curl http://localhost   # or visit your EC2 public URL
 ---
 
 
-## 🧪 Running Tests
+## Running Tests
 
 To run the automated test suite, make sure you have all dependencies installed, then execute:
 
@@ -148,7 +148,7 @@ Tests run against an isolated SQLite database for consistency and speed.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category         | Tools & Frameworks                                       | Purpose                                                |
 |------------------|---------------------------------------------------------|--------------------------------------------------------|
@@ -161,13 +161,13 @@ Tests run against an isolated SQLite database for consistency and speed.
 ---
 
 
-## 🏗️ Project Structure
+## Project Structure
 
 For the complete folder and file layout, including descriptions of each component, see [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
 
 ---
 
-## 🖼️ App preview (screenshots)
+## App preview (screenshots)
 
 Below are some key screens of the Job Tracker app in action.  
 All images live in `app/static/assets/screenshots/`
@@ -194,7 +194,7 @@ All images live in `app/static/assets/screenshots/`
 
 ---
 
-## 📬 Contact 
+## Contact
 
 If you’d like to discuss the project or potential opportunities, you can reach me here:
 
@@ -204,7 +204,7 @@ If you’d like to discuss the project or potential opportunities, you can reach
 
 ---
 
-## 🤝 License
+## License
 
 This project is licensed under the MIT License.
 
