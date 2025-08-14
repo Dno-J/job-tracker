@@ -77,8 +77,6 @@ Containerization ensures smooth, repeatable deployments on any host.
 * Database: **Neon Postgres** (or SQLite for local development)
 * Automatic builds & deploys triggered on every push to `main` branch
 
-**Live App:** [job-tracker-59j1.onrender.com](https://job-tracker-59j1.onrender.com)
-
 **Setup Commands:**
 
 ```bash
@@ -100,7 +98,7 @@ git push origin main
 # 5. Access your live app via the provided Render URL
 ```
 
-**Live App:** [http://16.171.148.202:8000](http://16.171.148.202:8000)
+**Live App:** [job-tracker-59j1.onrender.com](https://job-tracker-59j1.onrender.com)
 
 
 ### 🟠 AWS EC2
