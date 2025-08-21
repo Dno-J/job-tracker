@@ -4,7 +4,7 @@ A FastAPI-powered job tracking platform with JWT authentication, CSV/PDF exports
 
 <!-- 🌐 Live Apps -->
 [![Live App — Render](https://img.shields.io/badge/Live%20App-00C7B7?logo=render&logoColor=white&style=flat-square)](https://job-tracker-59j1.onrender.com)
-[![Live App — AWS EC2](https://img.shields.io/badge/Live%20App%20EC2-FF9900?logo=amazonaws&logoColor=white&style=flat-square)](http://16.171.148.202:8000)
+[![Live App — AWS EC2](https://img.shields.io/badge/Live%20App%20EC2-FF9900?logo=amazonaws&logoColor=white&style=flat-square)](https://job-tracker.dinojackson.site)
 
 <!-- 🛠️ Tech Badges -->
 [![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white&style=flat-square)](https://www.python.org/)
@@ -123,7 +123,7 @@ docker run -d --name jobtracker -p 80:80 --env-file .env.ec2 jobtracker-ec2
 curl http://localhost   # or visit your EC2 public URL
 ```
 
-**Live App:** [http://16.171.148.202:8000](http://16.171.148.202:8000)
+**Live App:** [https://job-tracker.dinojackson.site](https://job-tracker.dinojackson.site)
 
 ---
 
